@@ -6,10 +6,10 @@ using InteractiveUtils
 
 # ╔═╡ 15b4171f-9a0c-4fd9-94ca-9e28fcffe818
 begin
-	using Plots, Unitful, Measurements, PlutoUI, DataFrames, Statistics
-	md"""
-	# E4 Wave Transmission and Reflection
-	"""
+    using Plots, Unitful, Measurements, PlutoUI, DataFrames, Statistics
+    md"""
+    # E4 Wave Transmission and Reflection
+    """
 end
 
 # ╔═╡ ef223005-81dc-4717-9e3f-ef8f06870614
@@ -53,9 +53,9 @@ calculate the velocity of a wave like this:
 
 # ╔═╡ f6f1ecaf-228d-4ac9-963c-229b14ea8242
 begin
-	λ  = (0.083 ± 0.0005)   # Wavelength
-	f  = (3.6e9 ± 1e6)      # Frequency 
-	v  = f * λ              # Speed
+    λ = (0.083 ± 0.0005)   # Wavelength
+    f = (3.6e9 ± 1e6)      # Frequency 
+    v = f * λ              # Speed
 end
 
 # ╔═╡ 1d70a4fa-c5e2-44b1-9d13-1d788709c754
@@ -76,16 +76,16 @@ begin
 
     lambda = 2 .* (q_1 .- p_1) ./ N
     c = freq .* lambda ./ 1000
-	delta= ((p_2.- p_1)+ (q_2.- q_1) ) ./ 2
+    delta = ((p_2 .- p_1) + (q_2 .- q_1)) ./ 2
 
-	DataFrame(
-		"Frequency"=>freq * u"Hz",
-		"Q1 - P1"=>(q_1 .- p_1) * u"mm",
-		"N"=>N,
-		 "λ"=>lambda * u"mm",
-        "Speed"=>Measurements.value.(c) * u"ms^-1",
-        "% Uncertainty"=>100 .* Measurements.uncertainty.(c) ./ Measurements.value.(c),
-	)
+    DataFrame(
+        "Frequency" => freq * u"Hz",
+        "Q1 - P1" => (q_1 .- p_1) * u"mm",
+        "N" => N,
+        "λ" => lambda * u"mm",
+        "Speed" => Measurements.value.(c) * u"ms^-1",
+        "% Uncertainty" => 100 .* Measurements.uncertainty.(c) ./ Measurements.value.(c),
+    )
 end
 
 
@@ -107,15 +107,16 @@ the shift to the wavelength. The measurements are detailed below.
 
 # ╔═╡ 0ec2e2c7-4f70-482d-816a-94e89423c2c6
 begin
-	dropmissing(DataFrame(
-		"f"=>freq* u"Hz",
-		"P2 - P1"=>(p_2.- p_1) * u"mm",
-		"Q2 - Q1"=>(q_2.- q_1) * u"mm",
-		"λ"=>lambda* u"mm",
-		"Δ"=>delta* u"mm",
-		"Δ/λ"=>delta./ lambda,
-		)
-	)
+    dropmissing(
+        DataFrame(
+            "f" => freq * u"Hz",
+            "P2 - P1" => (p_2 .- p_1) * u"mm",
+            "Q2 - Q1" => (q_2 .- q_1) * u"mm",
+            "λ" => lambda * u"mm",
+            "Δ" => delta * u"mm",
+            "Δ/λ" => delta ./ lambda,
+        ),
+    )
 end
 
 # ╔═╡ 6731a07f-1c52-45cf-ae7d-b1b6dbdf4838
@@ -152,6 +153,14 @@ begin
 end
 
 
+# ╔═╡ b7387dd0-4825-44f3-8e39-a314d73d2dba
+md"""
+### Comments and Uncertainites
+
+The readings appear to be very internally consistent, with Acrylic having almost the same refractive index across two measurements. However, they do not match reference values of $n$, possibly due to experimental error.
+
+"""
+
 # ╔═╡ aa8a2fd0-07a5-4d08-99cc-fec90e2864f0
 md"""
 ## Transmission through a resonator
@@ -162,14 +171,6 @@ $( Show(MIME"image/png"(), read("img/graph.jpg")) )
 
 
 The peak voltage was at a frequency of $$f ≈ 2.38$$  GHz, corresponding to a wavelength of $$λ = u/f ≈ 125.1$$ mm, about $$5\%$$ more than the distance between the brass bolts.
-
-"""
-
-# ╔═╡ b7387dd0-4825-44f3-8e39-a314d73d2dba
-md"""
-### Comments and Uncertainites
-
-The readings appear to be very internally consistent, with Acrylic having almost the same refractive index across two measurements. However, they do not reference values of $n$, possibly due to experimental error.
 
 """
 
